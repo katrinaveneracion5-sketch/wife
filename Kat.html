@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lock Screen</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background: linear-gradient(to bottom, #87ceeb, #bde0fe);
+    font-family: 'Press Start 2P';
+}
+
+/* HEADER */
+.header {
+    text-align: center;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.header p {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+/* LOCK BOX */
+.lock-box {
+    background: #e6f4ff;
+    padding: 30px;
+    border-radius: 25px;
+    text-align: center;
+}
+
+/* DISPLAY */
+.display {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.digit-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* NUMBERS */
+.number {
+    width: 65px;
+    height: 65px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 28px;
+    font-family: Arial;
+    color: black;
+    font-weight: bold;
+}
+
+/* BUTTONS */
+.arrow {
+    width: 40px;
+    height: 30px;
+    border: none;
+    background: #a6d8ff;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.unlock {
+    margin-top: 15px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 12px;
+    background: #4da6ff;
+    color: white;
+    font-family: 'Press Start 2P';
+}
+
+/* AFTER UNLOCK */
+#content {
+    display: none;
+    position: fixed;
+    inset: 0;
+
+    display: none;
+    justify-content: center;   /* horizontal center */
+    align-items: flex-end;     /* bottom */
+
+    padding-bottom: 60px;
+
+    background-image: url('./bg.jpg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #87ceeb;
+
+    z-index: 999;
+}
+
+/* NEXT BUTTON */
+.next-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    color: #4da6ff;
+    font-family: 'Press Start 2P';
+    font-size: 10px;
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Only my wifey can access this ♡</h1>
+    <p>Enter password to continue</p>
+    <p>Hint: Important month and day to us</p>
+</div>
+
+<div class="lock-box" id="lockScreen">
+
+    <div class="display">
+
+        <div class="digit-box">
+            <button class="arrow" onclick="change(0,1)">▲</button>
+            <div class="number" id="n0">0</div>
+            <button class="arrow" onclick="change(0,-1)">▼</button>
+        </div>
+
+        <div class="digit-box">
+            <button class="arrow" onclick="change(1,1)">▲</button>
+            <div class="number" id="n1">0</div>
+            <button class="arrow" onclick="change(1,-1)">▼</button>
+        </div>
+
+        <div class="digit-box">
+            <button class="arrow" onclick="change(2,1)">▲</button>
+            <div class="number" id="n2">0</div>
+            <button class="arrow" onclick="change(2,-1)">▼</button>
+        </div>
+
+    </div>
+
+    <button class="unlock" onclick="check()">UNLOCK</button>
+
+</div>
+
+<!-- AFTER UNLOCK -->
+<div id="content">
+    <button class="next-btn" onclick="nextPage()">NEXT ➜</button>
+</div>
+
+<script>
+let digits = [0,0,0];
+
+function change(index, val) {
+    digits[index] += val;
+
+    if (digits[index] > 9) digits[index] = 0;
+    if (digits[index] < 0) digits[index] = 9;
+
+    document.getElementById("n"+index).innerText = digits[index];
+}
+
+function check() {
+    if (digits.join("") === "118") {
+        document.getElementById("lockScreen").style.display = "none";
+        document.querySelector(".header").style.display = "none";
+        document.getElementById("content").style.display = "flex";
+    } else {
+        alert("Ikaw ba yung baby ko?");
+    }
+}
+
+function nextPage() {
+    window.location.href = "next.html";
+}
+</script>
+
+</body>
+</html>
